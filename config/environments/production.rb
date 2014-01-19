@@ -66,7 +66,7 @@ FeedB::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # In production should be set to the actual wite URL
-  # config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => 'feedb.herokuapp.com' }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found).
