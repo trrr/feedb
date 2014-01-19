@@ -1,0 +1,5 @@
+#create_feedback
+  %h3 Create new feedback
+  = form_for(@feedback, html: {:'data-abide' => true}) do |f|
+    = f.text_field :title, placeholder: "Write the title", required: true, class: "inline form"
+    = f.submit "Create new feedback", class: "button radius small inline"

@@ -1,0 +1,21 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+li.comment {
+  padding: 15px;
+  margin: 15px 0;
+  border: 1px dashed grey;
+}
+
+#comment_content {
+  height: 100px;
+}
+
+span.reddel a {
+  color: red;
+}
+
+hr {
+  margin: 50px 0;
+}

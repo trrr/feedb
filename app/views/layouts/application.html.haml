@@ -1,0 +1,27 @@
+!!!
+%html
+  %head
+    %title ReplaceIt
+    = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+  %body
+    - if user_signed_in?
+      %nav.top-bar{'data-topbar' => true}
+        %ul.title-area
+          %li.name
+            %h1=link_to "FeedB", root_path
+        %section.top-bar-section
+          %ul.right
+            %li
+              =link_to "Your feedbacks", feedbacks_path
+            %li.has-dropdown.not-click
+              = link_to current_user.email, '#'
+              %ul.dropdown
+                %li= link_to "Edit profile", edit_user_registration_path
+                %li= link_to "Log out", destroy_user_session_path, method: :delete
+    .row
+      .large-10.large-centered.columns
+        %p.g-notice= notice
+        %p.g-alert= alert
+    = yield

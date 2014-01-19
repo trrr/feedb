@@ -1,0 +1,9 @@
+-if feedback.id
+  .feedback
+    %h2
+      = link_to "#{feedback.title}", feedback
+      .small.inline= "#{pluralize(feedback.comments.count, "comment")}"
+    %p.url
+      = feedback_url(feedback)
+    = link_to "View comments", feedback, class: "button radius small inline"
+    = link_to "Delete this feedback", feedback, method: :delete, data: {confirm: "Are you sure?"}, class: "delete button radius small inline"

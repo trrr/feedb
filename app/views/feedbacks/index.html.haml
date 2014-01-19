@@ -1,0 +1,8 @@
+.row
+  .large-10.large-centered.columns
+    %h1 List of all feedbacks
+
+    -if @feedbacks.any?
+      =render @feedbacks
+
+    =render 'shared/feedback_form'
