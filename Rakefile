@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ReplaceIt::Application.load_tasks
+FeedB::Application.load_tasks

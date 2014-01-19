@@ -1,4 +1,4 @@
-ReplaceIt::Application.routes.draw do
+FeedB::Application.routes.draw do
   devise_for :users
 
   root 'feedbacks#index'
