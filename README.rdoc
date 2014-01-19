@@ -1,1 +1,3 @@
 == Simple anonymous feedback app.
+
+Demo: https://feedb.herokuapp.com/
