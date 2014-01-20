@@ -14,7 +14,7 @@ class CommentsController < ApplicationController
 
   def destroy
     Comment.find(params[:id]).destroy
-    redirect_to :back
+    redirect_to @feedback
   end
 
   private
@@ -24,6 +24,6 @@ class CommentsController < ApplicationController
     end
 
     def set_feedback
-      @feedback = Feedback.find_by_url(params[:feedback_id])
+      @feedback ||= Feedback.find_by_url(params[:feedback_id])
     end
 end
