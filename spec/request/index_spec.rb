@@ -42,29 +42,48 @@ describe "Application"  do
         expect(page).to have_selector('h2 a', text: "Sample title 123")
       end
 
+      it "displays url the feedback" do
+        expect(page).to have_content("/feedbacks/#{user.feedbacks.find(1).url}")
+      end
+
       it "counts comments" do
         expect(page).to have_selector('h2 div', text: "1 comment")
       end
 
-      it "creates new feedback" do
-        fill_in "feedback_title", :with => "New feedback title"
-        click_button "Create new feedback"
-        expect(page).to have_content("New feedback title")
-        expect(page).to have_content("New feedback has been successfully created")
+      describe "it creates new feedback" do
+
+        before do
+          expect {
+            fill_in "feedback_title", :with => "New feedback title"
+            click_button "Create new feedback"
+          }.to change{user.feedbacks.count}.by 1
+        end
+
+        it "shows flash success message" do
+          expect(page).to have_content("New feedback has been successfully created")
+        end
+
+        it "displays new created feedback" do
+          expect(page).to have_content("New feedback title")
+        end
+
+        it "displays url of new feedback" do
+          visit '/'
+          expect(page).to have_content("/feedbacks/#{user.feedbacks.find(2).url}")
+        end
       end
 
-      it "has second comment" do
-        visit '/'
-        expect(page).to have_content("/feedbacks/#{user.feedbacks.find(1).url}")
-        expect(page).to have_content("Sample title 123")
+      describe "it deletes feedback" do
+        before do
+          expect {
+            page.driver.submit :delete, "/feedbacks/#{user.feedbacks.find(1).url}", {}
+            }.to change {user.feedbacks.count}.by -1
+        end
+
+        it "doesn't show deleted feedback" do
+          expect(page).not_to have_content("Sample title 123")
+        end
       end
-
-
-      it "deletes feedback" do
-        page.driver.submit :delete, "/feedbacks/#{user.feedbacks.find(1).url}", {}
-        expect(page).not_to have_content("Sample title 123")
-      end
-
     end
   end
 
@@ -78,6 +97,9 @@ describe "Application"  do
       click_button "Send feedback"
     end
 
+    let(:feedback) {user.feedbacks.find(1)}
+    let(:comment) {feedback.comments.find(1)}
+
     describe "for not signed in users" do
       it {should have_content("Sample title 123")}
 
@@ -87,17 +109,18 @@ describe "Application"  do
       end
 
       it "submits comment" do
-        expect(user.feedbacks.find(1).comments.count).to eq 2
+        expect(feedback.comments.count).to eq 2
       end
     end
 
     describe "for signed in users" do
+
       before do
         visit '/users/sign_in'
         fill_in "user_email", :with => user.email
         fill_in "user_password", :with => 'foobarqwe'
         click_button "Sign in"
-        visit feedback_path(user.feedbacks.find(1))
+        visit feedback_path(feedback)
       end
 
       it "counts comments" do
@@ -110,25 +133,27 @@ describe "Application"  do
       end
 
       it "deletes comments" do
-        page.driver.submit :delete, "/feedbacks/#{user.feedbacks.find(1).url}", {}
-        expect(page).to have_no_content("Yada yada")
+        expect {
+          page.driver.submit :delete, feedback_comment_path(feedback, comment), {}
+          }.to change {feedback.comments.count}.by -1
       end
 
       it "has back link" do 
         expect(page).to have_link("Back to list of all feedbacks", href: feedbacks_path)
       end
 
-      it "responds with user json" do
-        visit feedback_path(user.feedbacks.find(1))+".json"
-        expect(page).to have_content(user.feedbacks.find(1).to_json)
-      end
+      describe "it responds with json" do
+        before {visit feedback_path(feedback, :json)}
 
-      it "responds with user comments json" do
-        visit feedback_path(user.feedbacks.find(1))+".json"
-        expect(page).to have_content(user.feedbacks.find(1).comments.to_json)
-      end
+        it "responds with user json" do
+          expect(page).to have_content(feedback.to_json)
+        end
 
+        it "responds with user comments json" do
+          expect(page).to have_content(feedback.comments.to_json)
+        end
+
+      end
     end
-
   end
 end
