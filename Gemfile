@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.2'
-gem 'devise'
-gem "haml-rails"
-gem 'foundation-rails'
+gem 'devise', '3.2.2'
+gem 'haml-rails', '0.5.3'
+gem 'foundation-rails', '5.0.3.1'
 
 gem 'jquery-rails'
 gem 'turbolinks'
@@ -14,8 +14,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'unicorn'
 
 group :production do
-  gem 'pg'
-  gem 'rails_12factor'
+  gem 'pg', '0.17.1'
+  gem 'rails_12factor', '0.0.2'
 end
 
 group :doc do
