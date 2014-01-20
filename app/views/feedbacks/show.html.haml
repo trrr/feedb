@@ -8,7 +8,7 @@
       %h3=amount_of_comments
       %hr
       %ul.comments.no-bullet
-        = render @feedback.comments
+        = render @comments
       = link_to "Back to list of all feedbacks", feedbacks_path, class: "button radius"
     -if !belongs_to_current_user?        
       = render "shared/comment_form"

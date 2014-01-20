@@ -6,7 +6,7 @@ module FeedbacksHelper
   end
 
   def amount_of_comments
-    if @feedback.comments.count == 0
+    if @comments.any?
       "You don't have any comments yet."
     else
       "You have #{pluralize(@feedback.comments.count, "comment")}:"

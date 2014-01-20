@@ -1,8 +1,7 @@
--if comment.content 
-  %li
-    %blockquote
-      =simple_format h  comment.content
-      %cite
-        ="Anonimous : Sent #{time_ago_in_words(comment.created_at)} ago. : " 
-        %span.reddel=link_to 'Delete this comment', [@feedback, comment], method: :delete
-  %hr
+%li
+  %blockquote
+    =simple_format h  comment.content
+    %cite
+      ="Anonimous : Sent #{time_ago_in_words(comment.created_at)} ago. : " 
+      %span.reddel=link_to 'Delete this comment', [@feedback, comment], method: :delete
+%hr
