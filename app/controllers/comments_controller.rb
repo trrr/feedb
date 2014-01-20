@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-before_action :set_feedback
+  before_action :set_feedback
 
   def create
     @comment = @feedback.comments.build(comment_params)
