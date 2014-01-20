@@ -118,6 +118,16 @@ describe "Application"  do
         expect(page).to have_link("Back to list of all feedbacks", href: feedbacks_path)
       end
 
+      it "responds with user json" do
+        visit feedback_path(user.feedbacks.find(1))+".json"
+        expect(page).to have_content(user.feedbacks.find(1).to_json)
+      end
+
+      it "responds with user comments json" do
+        visit feedback_path(user.feedbacks.find(1))+".json"
+        expect(page).to have_content(user.feedbacks.find(1).comments.to_json)
+      end
+
     end
 
   end
