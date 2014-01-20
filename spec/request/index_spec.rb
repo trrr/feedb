@@ -8,11 +8,11 @@ describe "Application"  do
 
     before { visit root_path }
 
-    it "prompts you to sign in or sign up" do
-      expect(page).to have_selector 'p.g-alert', text: 'You need to sign in or sign up before continuing.'
-    end
-
     describe "for not-signed in users" do
+
+      it "prompts you to sign in or sign up" do
+        expect(page).to have_selector 'p.g-alert', text: 'You need to sign in or sign up before continuing.'
+      end
 
       it {current_path.should == '/users/sign_in'}
       it {should have_content('Sign in')}
@@ -32,8 +32,6 @@ describe "Application"  do
         fill_in "user_email", :with => user.email
         fill_in "user_password", :with => 'foobarqwe'
         click_button "Sign in"
-
-        visit root_path
       end
 
       it {should have_content('List of all feedbacks')}
@@ -42,7 +40,7 @@ describe "Application"  do
         expect(page).to have_selector('h2 a', text: "Sample title 123")
       end
 
-      it "displays url the feedback" do
+      it "displays url of the feedback" do
         expect(page).to have_content("/feedbacks/#{user.feedbacks.find(1).url}")
       end
 
@@ -136,6 +134,7 @@ describe "Application"  do
         expect {
           page.driver.submit :delete, feedback_comment_path(feedback, comment), {}
           }.to change {feedback.comments.count}.by -1
+        expect(page).to have_content("Comment deleted")
       end
 
       it "has back link" do 
@@ -156,4 +155,5 @@ describe "Application"  do
       end
     end
   end
+
 end
