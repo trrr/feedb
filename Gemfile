@@ -28,6 +28,7 @@ group :test, :development do
   gem 'sqlite3'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem "launchy"
   gem 'shoulda-matchers'
 end
 
