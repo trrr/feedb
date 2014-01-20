@@ -1,5 +1,5 @@
 class FeedbacksController < ApplicationController
-before_filter :authenticate_user!, except: :show
+  before_filter :authenticate_user!, except: :show
 
   def show
     @feedback = Feedback.find_by_url(params[:id])
@@ -14,8 +14,8 @@ before_filter :authenticate_user!, except: :show
   def create
     @feedback = current_user.feedbacks.build(feedback_params)
     if @feedback.save
-      flash[:notice] = "New feedback has been successfully created."
-      redirect_to @feedback
+     flash[:notice] = "New feedback has been successfully created."
+     redirect_to @feedback
     else
       flash[:alert] = "Something went wrong. Try again."
       render 'new'
