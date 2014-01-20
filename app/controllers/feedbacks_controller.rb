@@ -4,10 +4,17 @@ class FeedbacksController < ApplicationController
   def show
     @feedback = Feedback.find_by_url(params[:id])
     @comment = @feedback.comments.build
+    @comments = @feedback.comments.reject(&:new_record?)
+    respond_to do |format|
+      format.html
+      format.json do 
+        render json: {feedback: @feedback, comments: @comments}
+      end
+    end
   end
 
   def index
-    @feedbacks = current_user.feedbacks
+    @feedbacks = current_user.feedbacks.reject(&:new_record?)
     @feedback = current_user.feedbacks.build
   end
 
