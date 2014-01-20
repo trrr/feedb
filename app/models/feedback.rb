@@ -1,6 +1,6 @@
 class Feedback < ActiveRecord::Base
   belongs_to :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
   before_validation :create_url
   validates :url, presence: true, uniqueness: { case_sensitive: false }, length: {is: 15}
   validates :user_id, presence: true
