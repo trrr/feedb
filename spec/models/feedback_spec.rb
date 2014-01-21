@@ -26,5 +26,11 @@ describe Feedback do
       expect(feedback.to_param).to eq feedback.url
     end
 
+    it "doesn't save feedback with same url" do
+      feedback2 = Feedback.new(title: "Some title", user_id: 1, url: feedback.url)
+      feedback2.save
+      expect(feedback2.url).not_to eq feedback.url
+    end
+
   end
 end
